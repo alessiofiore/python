@@ -1,23 +1,27 @@
+''' 
+This script reads a source list of file names, reads a list of target file names and moves all files except for the ones present in both lists.
+This script also produce a dest.txt file that contains the moved filenames.
+'''
 import shutil
 
-mie = open("mie.txt", "r")
-tutte = open("tutte.txt", "r")
+source = open("source.txt", "r")
+target = open("target.txt", "r")
 movedFiles = 0
-res = open("res.txt", "w")
-for lineMie in mie:
-    lineMie = lineMie.rstrip('\n')
+dest = open("dest.txt", "w")
+for lineSource in source:
+    lineSource = lineSource.rstrip('\n')
     found = False
-    for lineTutte in tutte:
-        lineTutte = lineTutte.rstrip('\n')
-        if lineMie == lineTutte:
+    for lineTarget in target:
+        lineTarget = lineTarget.rstrip('\n')
+        if lineSource == lineTarget:
             found = True
             break
     if not found:
-        fileName = lineMie + ".CR2"
-        shutil.move("/Users/alessiofiore/Pictures/foto/Altro/Nostre/Tommaso/MIE/" + fileName, "/Users/alessiofiore/Pictures/foto/Altro/Nostre/Tommaso/" + fileName)
+        fileName = lineSource + ".CR2"
+        shutil.move("~/sourcedir/" + fileName, "~/destdir/" + fileName)
         movedFiles += 1
-        res.write(lineMie + "\n")
-res.close()
+        dest.write(lineSource + "\n")
+dest.close()
 print str(movedFiles) + " files moved"
-tutte.close()
-mie.close()
+target.close()
+source.close()
